@@ -14,13 +14,14 @@ class TimeSeriesDataset_Interpolation_roundedInput(Dataset):
         self.args = args
         # Normalized time grid helps the ODE solver operate on small step sizes (smoother trajectories)
         self.time_stamps = torch.linspace(0.0, 1.0, steps=len(x_values), dtype=torch.float32)
+        self.offset = 10 if len(self.x_values) > 500 else 2
 
     def __len__(self):
         return self.timeseries_count
     
     def __getitem__(self, index):
         if(index == 0):
-            self.mask_size = int(np.random.uniform(0,500))
+            self.mask_size = int(np.random.uniform(0,len(self.x_values)/2))
             # self.mask_size = 0
 
         #random start value y_start within boundaries config["y_lim"][0]+1 and config["y_lim"][1]-1
@@ -44,7 +45,7 @@ class TimeSeriesDataset_Interpolation_roundedInput(Dataset):
         y_spline, y_noise_spline,min_value, max_value, noise_std = callFunction(x_values=self.x_values, y_start=y_start, random_number_range=[self.args.random_number_range_distribution, self.args.random_number_range_mean, self.args.random_number_range_std], spline_value=[self.args.spline_value_low, self.args.spline_value_high], vocab_size=self.args.vocab_size, randomInt=randomInt, noise_std=[self.args.noise_std_distribution, self.args.noise_std_mean, self.args.noise_std_std])
 
         #remove arbitrary parts of timeseries
-        mask = remove_parts_of_graph_encoder_contiformer(self.x_values, self.mask_size, 10)
+        mask = remove_parts_of_graph_encoder_contiformer(self.x_values, self.mask_size, self.offset)
         # print((mask == 0).sum())
         mask = torch.tensor(mask, dtype=torch.bool)
         mask = ~mask
