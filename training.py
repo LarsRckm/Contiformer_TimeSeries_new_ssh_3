@@ -430,7 +430,7 @@ def train_one_epoch(model, optimizer, train_loader, device, epoch, loss_meter, c
         # Use loss weights from config
         loss, l1_loss, gradient_loss = model.calculate_loss(
             out,
-            groundTruth,
+            groundTruth, cfg,
             time_interval=time_stamps_original[0],
             weight_l1=getattr(cfg, 'weight_l1', 1.0),
             weight_grad=getattr(cfg, 'weight_grad', 0.5),
