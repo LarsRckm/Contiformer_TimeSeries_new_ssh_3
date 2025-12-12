@@ -314,7 +314,31 @@ def setup_environment(cfg):
 
 def build_model_and_optimizer(cfg, device, log):
     obs_dim = 1
-    model = ContiFormer(obs_dim)
+    model = ContiFormer(input_size=obs_dim,
+                        d_model=getattr(cfg, 'd_model', 256),
+                        d_inner=getattr(cfg, 'd_inner', 256),
+                        n_layers=getattr(cfg, 'n_layers', 3),
+                        n_head=getattr(cfg, 'n_head', 4),
+                        d_k=getattr(cfg, 'd_k', 64),
+                        d_v=getattr(cfg, 'd_v', 64),
+                        dropout=getattr(cfg, 'dropout', 0.1),
+                        actfn_ode=getattr(cfg, 'actfn', "softplus"),
+                        layer_type_ode=getattr(cfg, 'layer_type_ode', "concat"),
+                        zero_init_ode=getattr(cfg, 'zero_init_ode', True),
+                        atol_ode=getattr(cfg, 'atol', 1e-6),
+                        rtol_ode=getattr(cfg, 'rtol', 1e-6),
+                        method_ode=getattr(cfg, 'method', "rk4"),
+                        linear_type_ode=getattr(cfg, 'linear_type_ode', "inside"),
+                        regularize=getattr(cfg, 'regularize', 256),
+                        approximate_method=getattr(cfg, 'approximate_method', "last"),
+                        nlinspace=getattr(cfg, 'nlinspace', 3),
+                        interpolate_ode=getattr(cfg, 'interpolate_ode', "linear"),
+                        itol_ode=getattr(cfg, 'itol_ode', 1e-2),
+                        add_pe=getattr(cfg, 'add_pe', False),
+                        normalize_before=getattr(cfg, 'normalize_before', False),
+                        # max_length=getattr(cfg, 'max_length', 100),
+                        )
+    model.to(device)
     optimizer = optim.AdamW(model.parameters(), lr=cfg.lr, weight_decay=1e-5)
     scheduler = None
     start_itr = 0

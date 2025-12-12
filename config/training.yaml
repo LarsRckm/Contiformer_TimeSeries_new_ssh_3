@@ -23,17 +23,29 @@ disable_tqdm: false  # hide tqdm progress bars when true
 
 # ==================== Model Architecture ====================
 d_model: 64  # hidden dimension of the transformer
-d_inner: 256  # feed-forward inner dimension (typically 4x d_model)
+d_inner: 1024  # feed-forward inner dimension (typically 4x d_model)
 n_layers: 3  # number of encoder layers (was hardcoded to 1)
 n_head: 4  # number of attention heads
+d_k: 16  # dimension of each attention head
+d_v: 16  # dimension of each attention head
 actfn: softplus  # activation function for ODE: softplus, tanh, relu
+layer_type_ode: concat  # odeformerlayer, transformerlayer
+zero_init_ode: true  # zero-initialize ODE layer last linear
+add_pe: false  # add positional encoding to input
+normalize_before: false  # use pre-norm transformer layers
 
 # ==================== ODE Solver Settings ====================
-atol: 0.01  # absolute tolerance for ODE solver
-rtol: 0.01  # relative tolerance for ODE solver
+atol: 1e-6  # absolute tolerance for ODE solver
+rtol: 1e-6  # relative tolerance for ODE solver
+itol_ode: 1e-2
 method: rk4  # ODE solver integration method: euler, rk4, dopri5
 dropout: 0.1  # dropout probability in encoder
 grad_clip: 1.0  # max gradient norm for clipping (0 disables)
+linear_type_ode: inside  # linear layer type in ODE func: concat, time
+regularizee: false  # enable regularization losses in ODE solver
+approximate_method: last  # none, taylor, fourier
+nlinspace: 3  # number of points for approximate methods
+interpolate_ode: linear  # use interpolation-based ODE solver
 
 # ==================== Learning Rate Scheduler ====================
 use_scheduler: true  # enable learning rate scheduling

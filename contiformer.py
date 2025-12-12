@@ -266,7 +266,7 @@ class ContiFormer(nn.Module):
             itol_ode: Optional[float] = 1e-2,
             add_pe: Optional[bool] = False,
             normalize_before: Optional[bool] = False,
-            max_length: int = 100,
+            # max_length: int = 100,
     ):
         super().__init__()
 
@@ -314,7 +314,7 @@ class ContiFormer(nn.Module):
         else:
             self.linear = None
 
-        self.max_length = max_length
+        # self.max_length = max_length
         self.__output_size = d_model
         self.__hidden_size = d_model
 
