@@ -307,6 +307,7 @@ class ContiFormer(nn.Module):
         self.smooth_loss = []
         self.total_loss = []
 
+        # self.linIn = nn.Sequential(nn.Linear(input_size, d_model), nn.GELU(), nn.Linear(d_model, d_model))
         self.linIn = nn.Linear(input_size, d_model)
         self.typeEmbedding = nn.Embedding(2,d_model)
         self.linOut = nn.Linear(d_model, input_size)
@@ -367,7 +368,9 @@ class ContiFormer(nn.Module):
             dt = torch.clamp(dt, min=1e-6)  # Avoid division by zero
             pred_grad = (pred_x[:, 1:] - pred_x[:, :-1]) / dt
             target_grad = (target_x[:, 1:] - target_x[:, :-1]) / dt
-            gradient_loss = torch.nn.functional.mse_loss(pred_grad, target_grad, reduction="mean")
+            num = torch.nn.functional.mse_loss(pred_grad, target_grad, reduction="mean")
+            denom = torch.mean(target_grad ** 2) + 1e-8
+            gradient_loss = num / denom
         else:
             gradient_loss = torch.tensor(0.0, device=pred_x.device)
 
