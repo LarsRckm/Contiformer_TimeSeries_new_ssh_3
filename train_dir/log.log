@@ -927,3 +927,5 @@
 [2025-12-14 20:09:00,858][./train_dir/log][INFO] - Epoch 10: LR = 0.001000
 [2025-12-14 20:09:03,115][./train_dir/log][INFO] - Validation: Epoch: 10, MAE: 32.7633, RMSE: 36.5215, MAPE: 73.15%
 [2025-12-14 20:23:23,533][./train_dir/log][INFO] - Training: Iter: 11, batch: 50/100, running loss: 0.0404
+[2025-12-14 20:37:42,426][./train_dir/log][INFO] - Training: Iter: 11, batch: 100/100, running loss: 0.0385
+[2025-12-14 20:37:45,212][./train_dir/log][INFO] - Validation: Epoch: 11, MAE: 101.1559, RMSE: 131.9032, MAPE: 69.96%
