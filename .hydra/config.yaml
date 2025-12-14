@@ -39,7 +39,7 @@ warmup_epochs: 10
 min_lr: 0.0001
 weight_l1: 1.0
 weight_grad: 0.01
-weight_smooth: 0.01
+weight_smooth: 0.0001
 use_frequency_loss: false
 early_stopping: true
 patience: 200
@@ -58,7 +58,7 @@ spline_value_high: 1100000
 vocab_size: 100000
 noise_std_distribution: norm
 noise_std_mean: 0
-noise_std_std: 0.15
+noise_std_std: 0.1
 interpolation_min_width: 10
 interpolation_max_width: 100
 interpolation_max_count: 10

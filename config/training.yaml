@@ -78,7 +78,7 @@ spline_value_high: 1100000  # upper bound for spline amplitude sampling
 vocab_size: 100000  # range for token-like noise injection
 noise_std_distribution: norm  # distribution for observation noise
 noise_std_mean: 0  # mean of observation noise
-noise_std_std: 0.15  # std dev of observation noise
+noise_std_std: 0.1  # std dev of observation noise
 interpolation_min_width: 10  # smallest gap length removed from series
 interpolation_max_width: 100  # largest gap length removed from series
 interpolation_max_count: 10  # maximum number of gaps removed
